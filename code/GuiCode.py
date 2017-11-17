@@ -21,6 +21,7 @@ class GuiManager(Ui_MainWindow):
 
     def start(self):
         print "JOZKo"
+        print "stuff"
         self.guiBtnDelete.clicked.connect(printStuff)
 
 
