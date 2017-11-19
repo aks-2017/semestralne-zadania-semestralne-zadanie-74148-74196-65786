@@ -1,12 +1,38 @@
 import string
 from APP_GUI.gui import *
-from Acl import Acl as AclClass
+from AclRule import Acl as AclClass
 from PyQt4 import QtCore, QtGui
+from Forwarder import *
 
 #myAcl = AclClass("192.168.2.1", "permit")
 #myAcl.printState()
 #print WebDev Branch test 2
 ui = None
+fwList = []
+selectedFw = None
+
+def loadForwarders(list):
+    global selectedFw
+    fw1 = Forwarder(1, "Janko")
+    fw2 = Forwarder(2, "Samko")
+    fw3 = Forwarder(3, "Danko")
+    list.append(fw1)
+    list.append(fw2)
+    list.append(fw3)
+    if selectedFw is None:
+        selectedFw = list[0]
+
+
+def loadForwardersToGui():
+    global fwList
+    global ui
+    print "Loading Fw to Gui: "
+    for i in fwList:
+        print "Fw list: "+i.name
+        ui.guiCbForwarder.addItem(i.name)
+
+
+
 
 def printStuff():
     global ui
@@ -52,9 +78,12 @@ def actionPerformedGuiChbEnableFirewall():
         print "Firewall is deactivated"
 
 def loadSelectedForwarder(forwarderName):
-    print "Loading Forwarder: "+forwarderName+" to GUI"
-
-
+    global fwList, selectedFw
+    print "Searching Forwarder in fwList: "+forwarderName+" to GUI"
+    for i in fwList:
+        if i.name == forwarderName:
+            print "I found forwarder: "+i.name+"i will load it to Table"
+            selectedFw = i
 
 class GuiManager(Ui_MainWindow):
 
@@ -81,5 +110,11 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     ui.start()
     MainWindow.show()
+
+    loadForwarders(fwList)
+    loadForwardersToGui()
+
     sys.exit(app.exec_())
+
+
 

@@ -525,21 +525,6 @@
       <height>27</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string>Fwd Janko</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Fwd Samko</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Fwd Danko</string>
-     </property>
-    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

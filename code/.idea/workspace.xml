@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="31f41f76-3163-416b-9cf1-7d4dafa388e4" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Forwarder.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Acl.py" afterPath="$PROJECT_DIR$/AclRule.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/APP_GUI/gui.py" afterPath="$PROJECT_DIR$/APP_GUI/gui.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/APP_GUI/gui.ui" afterPath="$PROJECT_DIR$/APP_GUI/gui.ui" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GuiCode.py" afterPath="$PROJECT_DIR$/GuiCode.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,8 +21,8 @@
       <file leaf-file-name="GuiCode.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GuiCode.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="48" column="43" lean-forward="true" selection-start-line="48" selection-start-column="43" selection-end-line="48" selection-end-column="43" />
+            <state relative-caret-position="216">
+              <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -26,11 +30,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Forwarder.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Forwarder.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="guy.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/APP_GUI/guy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="15" column="16" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+            <state relative-caret-position="216">
+              <caret line="15" column="16" lean-forward="true" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -46,11 +60,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Acl.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Acl.py">
+      <file leaf-file-name="AclRule.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AclRule.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state relative-caret-position="288">
+              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -62,8 +76,8 @@
             <state relative-caret-position="612">
               <caret line="34" column="15" lean-forward="true" selection-start-line="34" selection-start-column="15" selection-end-line="34" selection-end-column="15" />
               <folding>
-                <marker date="1511092835073" expanded="true" signature="13936:13945" ph="..." />
-                <marker date="1511092835073" expanded="true" signature="13943:13945" ph="..." />
+                <marker date="1511108339721" expanded="true" signature="13519:13528" ph="..." />
+                <marker date="1511108339721" expanded="true" signature="13526:13528" ph="..." />
               </folding>
             </state>
           </provider>
@@ -95,6 +109,8 @@
         <option value="$PROJECT_DIR$/APP_GUI/gui.py" />
         <option value="$PROJECT_DIR$/Initialize.py" />
         <option value="$PROJECT_DIR$/Acl.py" />
+        <option value="$PROJECT_DIR$/APP_GUI/Forwarder.py" />
+        <option value="$PROJECT_DIR$/Forwarder.py" />
         <option value="$PROJECT_DIR$/GuiCode.py" />
       </list>
     </option>
@@ -309,7 +325,14 @@
       <option name="project" value="LOCAL" />
       <updated>1511103362326</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="block port numbers text lines if L4 protocol is not TCP or UDP">
+      <created>1511104224610</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1511104224610</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -349,7 +372,8 @@
     <MESSAGE value="web-dev Branch test 2" />
     <MESSAGE value="gui-dev Branch test 2" />
     <MESSAGE value="add actionPerformed functions for comboBoxes and checkbox" />
-    <option name="LAST_COMMIT_MESSAGE" value="add actionPerformed functions for comboBoxes and checkbox" />
+    <MESSAGE value="block port numbers text lines if L4 protocol is not TCP or UDP" />
+    <option name="LAST_COMMIT_MESSAGE" value="block port numbers text lines if L4 protocol is not TCP or UDP" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -374,7 +398,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Acl.py">
+    <entry file="file://$PROJECT_DIR$/AclRule.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
@@ -395,8 +419,8 @@
         <state relative-caret-position="612">
           <caret line="34" column="15" lean-forward="true" selection-start-line="34" selection-start-column="15" selection-end-line="34" selection-end-column="15" />
           <folding>
-            <marker date="1511092835073" expanded="true" signature="13936:13945" ph="..." />
-            <marker date="1511092835073" expanded="true" signature="13943:13945" ph="..." />
+            <marker date="1511108339721" expanded="true" signature="13519:13528" ph="..." />
+            <marker date="1511108339721" expanded="true" signature="13526:13528" ph="..." />
           </folding>
         </state>
       </provider>
@@ -410,7 +434,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Acl.py">
+    <entry file="file://$PROJECT_DIR$/AclRule.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
@@ -423,14 +447,14 @@
         <state relative-caret-position="810">
           <caret line="45" column="2" lean-forward="true" selection-start-line="45" selection-start-column="2" selection-end-line="45" selection-end-column="2" />
           <folding>
-            <marker date="1511092835073" expanded="true" signature="13936:13945" ph="..." />
-            <marker date="1511092835073" expanded="true" signature="13943:13945" ph="..." />
+            <marker date="1511108339721" expanded="true" signature="13519:13528" ph="..." />
+            <marker date="1511108339721" expanded="true" signature="13526:13528" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Initialize.py" />
-    <entry file="file://$PROJECT_DIR$/Acl.py">
+    <entry file="file://$PROJECT_DIR$/AclRule.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
@@ -443,14 +467,14 @@
         <state relative-caret-position="288">
           <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
-            <marker date="1511092835073" expanded="true" signature="13936:13945" ph="..." />
-            <marker date="1511092835073" expanded="true" signature="13943:13945" ph="..." />
+            <marker date="1511108339721" expanded="true" signature="13519:13528" ph="..." />
+            <marker date="1511108339721" expanded="true" signature="13526:13528" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Initialize.py" />
-    <entry file="file://$PROJECT_DIR$/Acl.py">
+    <entry file="file://$PROJECT_DIR$/AclRule.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
@@ -468,38 +492,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/APP_GUI/guy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="16" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Initialize.py" />
     <entry file="file://$PROJECT_DIR$/APP_GUI/gui.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="34" column="15" lean-forward="true" selection-start-line="34" selection-start-column="15" selection-end-line="34" selection-end-column="15" />
           <folding>
-            <marker date="1511092835073" expanded="true" signature="13936:13945" ph="..." />
-            <marker date="1511092835073" expanded="true" signature="13943:13945" ph="..." />
+            <marker date="1511108339721" expanded="true" signature="13519:13528" ph="..." />
+            <marker date="1511108339721" expanded="true" signature="13526:13528" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Acl.py">
+    <entry file="file://$PROJECT_DIR$/APP_GUI/Forwarder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/APP_GUI/guy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="15" column="16" lean-forward="true" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Forwarder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AclRule.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuiCode.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="48" column="43" lean-forward="true" selection-start-line="48" selection-start-column="43" selection-end-line="48" selection-end-column="43" />
+        <state relative-caret-position="216">
+          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
