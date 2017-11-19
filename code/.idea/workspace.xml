@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="31f41f76-3163-416b-9cf1-7d4dafa388e4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/APP_GUI/gui.py" afterPath="$PROJECT_DIR$/APP_GUI/gui.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/APP_GUI/gui.ui" afterPath="$PROJECT_DIR$/APP_GUI/gui.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Acl.py" afterPath="$PROJECT_DIR$/Acl.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GuiCode.py" afterPath="$PROJECT_DIR$/GuiCode.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,8 +17,8 @@
       <file leaf-file-name="GuiCode.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GuiCode.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+            <state relative-caret-position="72">
+              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -248,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1511091106649</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add actionPerformed functions for buttons&#10;Acl class hotfix + add src prefix, dst prefix">
+      <created>1511093502986</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1511093502986</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -282,7 +286,8 @@
     <MESSAGE value="pycharm git test" />
     <MESSAGE value="rename default name of Gui objects&#10;add options to guiDirection combo box&#10;add options to guiAction" />
     <MESSAGE value="Acl class update (data class)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Acl class update (data class)" />
+    <MESSAGE value="Add actionPerformed functions for buttons&#10;Acl class hotfix + add src prefix, dst prefix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add actionPerformed functions for buttons&#10;Acl class hotfix + add src prefix, dst prefix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -431,8 +436,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GuiCode.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+        <state relative-caret-position="72">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
