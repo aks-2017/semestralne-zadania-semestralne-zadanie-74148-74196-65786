@@ -3,16 +3,27 @@ from APP_GUI.gui import *
 from Acl import Acl as AclClass
 from PyQt4 import QtCore, QtGui
 
-
-print string.uppercase
-myAcl = AclClass("192.168.2.1", "permit")
-myAcl.printState()
+#myAcl = AclClass("192.168.2.1", "permit")
+#myAcl.printState()
 ui = None
 
 def printStuff():
     global ui
-    print "JOZKo"
-    ui.lineEdit.setText("Jozko nepije")
+    ui.guiLeSrcMac.setText("Ahoj")
+    print "ahoj"
+
+def actionPerformedGuiBtnDelete():
+    global ui
+    print "actionPerformedGuiBtnDelete"
+
+def actionPerformedGuiBtnEdit():
+    global ui
+    print "actionPerformedGuiBtnEdit"
+
+def actionPerformedGuiBtnCreate():
+    global ui
+    print "actionPerformedGuiBtnCreate"
+
 
 class GuiManager(Ui_MainWindow):
 
@@ -22,8 +33,9 @@ class GuiManager(Ui_MainWindow):
     def start(self):
         print "JOZKo"
         print "stuff"
-        self.guiBtnDelete.clicked.connect(printStuff)
-
+        self.guiBtnDelete.clicked.connect(actionPerformedGuiBtnDelete)
+        self.guiBtnCreate.clicked.connect(actionPerformedGuiBtnCreate)
+        self.guiBtnEdit.clicked.connect(actionPerformedGuiBtnDelete)
 
 if __name__ == "__main__":
     import sys

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui.ui'
 #
-# Created: Sun Nov 19 06:17:55 2017
+# Created: Sun Nov 19 07:00:35 2017
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -105,9 +105,9 @@ class Ui_MainWindow(object):
         self.guiBtnCreate = QtGui.QPushButton(self.centralwidget)
         self.guiBtnCreate.setGeometry(QtCore.QRect(930, 480, 98, 27))
         self.guiBtnCreate.setObjectName(_fromUtf8("guiBtnCreate"))
-        self.GuiBtnEdit = QtGui.QPushButton(self.centralwidget)
-        self.GuiBtnEdit.setGeometry(QtCore.QRect(1050, 480, 98, 27))
-        self.GuiBtnEdit.setObjectName(_fromUtf8("GuiBtnEdit"))
+        self.guiBtnEdit = QtGui.QPushButton(self.centralwidget)
+        self.guiBtnEdit.setGeometry(QtCore.QRect(1040, 480, 98, 27))
+        self.guiBtnEdit.setObjectName(_fromUtf8("guiBtnEdit"))
         self.guiCbInterface = QtGui.QComboBox(self.centralwidget)
         self.guiCbInterface.setGeometry(QtCore.QRect(950, 90, 80, 27))
         self.guiCbInterface.setObjectName(_fromUtf8("guiCbInterface"))
@@ -211,7 +211,7 @@ class Ui_MainWindow(object):
         self.label_13.setText(_translate("MainWindow", "Dst. Port Number", None))
         self.label_11.setText(_translate("MainWindow", "Firewall Rules ", None))
         self.guiBtnCreate.setText(_translate("MainWindow", "Create", None))
-        self.GuiBtnEdit.setText(_translate("MainWindow", "Edit", None))
+        self.guiBtnEdit.setText(_translate("MainWindow", "Edit", None))
         self.guiCbInterface.setItemText(0, _translate("MainWindow", "All", None))
         self.guiCbDirection.setItemText(0, _translate("MainWindow", "In", None))
         self.guiCbDirection.setItemText(1, _translate("MainWindow", "Out", None))

@@ -293,10 +293,10 @@
      <string>Create</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="GuiBtnEdit">
+   <widget class="QPushButton" name="guiBtnEdit">
     <property name="geometry">
      <rect>
-      <x>1050</x>
+      <x>1040</x>
       <y>480</y>
       <width>98</width>
       <height>27</height>
