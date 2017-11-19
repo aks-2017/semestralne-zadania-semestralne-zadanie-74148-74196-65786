@@ -32,7 +32,17 @@ def actionPerformedGuiCbForwarder():
 
 def actionPerformedGuiCbL4Protocol():
     global ui
-    print "L4 protocol changed to:"+ui.guiCbL4Protocol.currentText()
+    l4proto = ui.guiCbL4Protocol.currentText()
+    print "L4 protocol changed to:"+l4proto
+    if l4proto != "TCP" and l4proto != "UDP":
+        print "Block Src/Dst port number lineEdit"
+        ui.guiLeSrcPortNumber.setDisabled(True)
+        ui.guiLeDstPortNumber.setDisabled(True)
+    else:
+        print "Unblock Src/Dst port number lineEdit"
+        ui.guiLeSrcPortNumber.setDisabled(False)
+        ui.guiLeDstPortNumber.setDisabled(False)
+
 
 def actionPerformedGuiChbEnableFirewall():
     global ui

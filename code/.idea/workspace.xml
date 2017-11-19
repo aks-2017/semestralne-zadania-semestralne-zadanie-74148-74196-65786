@@ -17,8 +17,8 @@
       <file leaf-file-name="GuiCode.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GuiCode.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-458">
-              <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+            <state relative-caret-position="442">
+              <caret line="48" column="43" lean-forward="true" selection-start-line="48" selection-start-column="43" selection-end-line="48" selection-end-column="43" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -302,7 +302,14 @@
       <option name="project" value="LOCAL" />
       <updated>1511095468669</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="add actionPerformed functions for comboBoxes and checkbox">
+      <created>1511103362326</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1511103362326</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -341,7 +348,8 @@
     <MESSAGE value="web-dev Branch test" />
     <MESSAGE value="web-dev Branch test 2" />
     <MESSAGE value="gui-dev Branch test 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="gui-dev Branch test 2" />
+    <MESSAGE value="add actionPerformed functions for comboBoxes and checkbox" />
+    <option name="LAST_COMMIT_MESSAGE" value="add actionPerformed functions for comboBoxes and checkbox" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -490,8 +498,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GuiCode.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-458">
-          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+        <state relative-caret-position="442">
+          <caret line="48" column="43" lean-forward="true" selection-start-line="48" selection-start-column="43" selection-end-line="48" selection-end-column="43" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
