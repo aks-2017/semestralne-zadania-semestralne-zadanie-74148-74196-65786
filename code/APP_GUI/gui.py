@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui.ui'
 #
-# Created: Sun Nov 19 11:18:59 2017
+# Created: Sun Nov 19 17:10:20 2017
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -44,23 +44,33 @@ class Ui_MainWindow(object):
         self.guiTblFirewallRules.setObjectName(_fromUtf8("guiTblFirewallRules"))
         self.guiTblFirewallRules.setRowCount(0)
         item = QtGui.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.guiTblFirewallRules.setHorizontalHeaderItem(0, item)
         item = QtGui.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.guiTblFirewallRules.setHorizontalHeaderItem(1, item)
         item = QtGui.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.guiTblFirewallRules.setHorizontalHeaderItem(2, item)
         item = QtGui.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.guiTblFirewallRules.setHorizontalHeaderItem(3, item)
         item = QtGui.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.guiTblFirewallRules.setHorizontalHeaderItem(4, item)
         item = QtGui.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.guiTblFirewallRules.setHorizontalHeaderItem(5, item)
         item = QtGui.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.guiTblFirewallRules.setHorizontalHeaderItem(6, item)
         item = QtGui.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.guiTblFirewallRules.setHorizontalHeaderItem(7, item)
         item = QtGui.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.guiTblFirewallRules.setHorizontalHeaderItem(8, item)
+        self.guiTblFirewallRules.horizontalHeader().setMinimumSectionSize(20)
         self.label_5 = QtGui.QLabel(self.centralwidget)
         self.label_5.setGeometry(QtCore.QRect(820, 120, 66, 17))
         self.label_5.setText(_fromUtf8(""))
@@ -115,6 +125,7 @@ class Ui_MainWindow(object):
         self.guiCbDirection = QtGui.QComboBox(self.centralwidget)
         self.guiCbDirection.setGeometry(QtCore.QRect(950, 120, 80, 27))
         self.guiCbDirection.setObjectName(_fromUtf8("guiCbDirection"))
+        self.guiCbDirection.addItem(_fromUtf8(""))
         self.guiCbDirection.addItem(_fromUtf8(""))
         self.guiCbDirection.addItem(_fromUtf8(""))
         self.guiCbAction = QtGui.QComboBox(self.centralwidget)
@@ -210,8 +221,9 @@ class Ui_MainWindow(object):
         self.guiBtnCreate.setText(_translate("MainWindow", "Create", None))
         self.guiBtnEdit.setText(_translate("MainWindow", "Edit", None))
         self.guiCbInterface.setItemText(0, _translate("MainWindow", "All", None))
-        self.guiCbDirection.setItemText(0, _translate("MainWindow", "In", None))
-        self.guiCbDirection.setItemText(1, _translate("MainWindow", "Out", None))
+        self.guiCbDirection.setItemText(0, _translate("MainWindow", "IN", None))
+        self.guiCbDirection.setItemText(1, _translate("MainWindow", "OUT", None))
+        self.guiCbDirection.setItemText(2, _translate("MainWindow", "BOTH", None))
         self.guiCbAction.setItemText(0, _translate("MainWindow", "Permit", None))
         self.guiCbAction.setItemText(1, _translate("MainWindow", "Deny", None))
         self.guiLeSrcMac.setText(_translate("MainWindow", "BB:BB:BB:BB:BB:BB", None))

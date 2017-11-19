@@ -22,16 +22,43 @@ def loadForwarders(list):
     if selectedFw is None:
         selectedFw = list[0]
 
+def testFunctionForFW():
+    selectedFw.addRuleToAcl( AclClass("permit", 1, "aa:aa:aa:bb:bb:bb", "cc:cc:cc:dd:dd:dd", "192.168.5.2", "192.168.3.5", 20, 25, "UDP","s0/0/0", "IN"))
+    selectedFw.addRuleToAcl(
+        AclClass("deny", 2, "aa:aa:aa:bb:bb:bb", "cc:cc:cc:dd:dd:dd", "192.168.5.2", "192.168.3.5", 20, 25, "UDP",
+                 "s0/0/0", "IN"))
+    selectedFw.printAclRules()
 
-def loadForwardersToGui():
-    global fwList
-    global ui
-    print "Loading Fw to Gui: "
+
+def loadSelectedForwarder(forwarderName):
+    global fwList, selectedFw
+    print "Searching Forwarder in fwList: "+forwarderName+" to GUI"
     for i in fwList:
-        print "Fw list: "+i.name
-        ui.guiCbForwarder.addItem(i.name)
+        if i.name == forwarderName:
+            print "I found forwarder: "+i.name+"i will load it to Table"
+            selectedFw = i
+    loadSelectedForwarderToGuiTblFirewallRules()
 
-
+def loadSelectedForwarderToGuiTblFirewallRules():
+    global selectedFw, ui
+    ui.guiTblFirewallRules.setRowCount(0)
+    index = 0
+    ui.guiTblFirewallRules.setRowCount(len(selectedFw.acl))
+    for i in selectedFw.acl:
+        print "I will ad this rule"
+        ui.guiTblFirewallRules.setItem(index,0, QtGui.QTableWidgetItem(str(i.id)))
+        ui.guiTblFirewallRules.setItem(index, 1, QtGui.QTableWidgetItem(i.action))
+        ui.guiTblFirewallRules.setItem(index, 2, QtGui.QTableWidgetItem(i.srcMac))
+        ui.guiTblFirewallRules.setItem(index, 3, QtGui.QTableWidgetItem(i.dstMac))
+        ui.guiTblFirewallRules.setItem(index, 4, QtGui.QTableWidgetItem(i.srcIp))
+        ui.guiTblFirewallRules.setItem(index, 5, QtGui.QTableWidgetItem(i.dstIp))
+        ui.guiTblFirewallRules.setItem(index, 6, QtGui.QTableWidgetItem(i.l4Protocol))
+        ui.guiTblFirewallRules.setItem(index, 7, QtGui.QTableWidgetItem(i.interface))
+        ui.guiTblFirewallRules.setItem(index, 8, QtGui.QTableWidgetItem(i.direction))
+        index += 1
+    header = ui.guiTblFirewallRules.horizontalHeader()
+    for x in range(0, 9):
+        header.setResizeMode(x, QtGui.QHeaderView.ResizeToContents)
 
 
 def printStuff():
@@ -42,6 +69,7 @@ def printStuff():
 def actionPerformedGuiBtnDelete():
     global ui
     print "actionPerformedGuiBtnDelete"
+
 
 def actionPerformedGuiBtnEdit():
     global ui
@@ -77,13 +105,14 @@ def actionPerformedGuiChbEnableFirewall():
     else:
         print "Firewall is deactivated"
 
-def loadSelectedForwarder(forwarderName):
-    global fwList, selectedFw
-    print "Searching Forwarder in fwList: "+forwarderName+" to GUI"
+def loadForwardersToGuiCbForwarder():
+    global fwList
+    global ui, selectedFw
+    print "Loading Fw to Gui: "
     for i in fwList:
-        if i.name == forwarderName:
-            print "I found forwarder: "+i.name+"i will load it to Table"
-            selectedFw = i
+        print "Fw list: " + i.name
+        ui.guiCbForwarder.addItem(i.name)
+
 
 class GuiManager(Ui_MainWindow):
 
@@ -112,7 +141,9 @@ if __name__ == "__main__":
     MainWindow.show()
 
     loadForwarders(fwList)
-    loadForwardersToGui()
+    loadForwardersToGuiCbForwarder()
+    testFunctionForFW()
+    loadSelectedForwarder(ui.guiCbForwarder.currentText())
 
     sys.exit(app.exec_())
 

@@ -1,8 +1,6 @@
 class Acl:
 
-    def __init__(self, ip, action, id, srcMac, dstMac, srcIp, dstIp, srcPrefix, dstPrefix, l4Protocol, interface, direction ):
-        self.action = action
-        self.id = id
+    def __init__(self, action, id, srcMac, dstMac, srcIp, dstIp, srcPrefix, dstPrefix, l4Protocol, interface, direction ):
         self.action = action
         self.id = id
         self.srcMac = srcMac
