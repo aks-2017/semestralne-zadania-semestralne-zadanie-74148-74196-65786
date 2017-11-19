@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="31f41f76-3163-416b-9cf1-7d4dafa388e4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GuiCode.py" afterPath="$PROJECT_DIR$/GuiCode.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -264,7 +263,14 @@
       <option name="project" value="LOCAL" />
       <updated>1511094057566</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="web-dev Branch test 2">
+      <created>1511094563289</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1511094563289</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -300,7 +306,8 @@
     <MESSAGE value="Acl class update (data class)" />
     <MESSAGE value="Add actionPerformed functions for buttons&#10;Acl class hotfix + add src prefix, dst prefix" />
     <MESSAGE value="web-dev Branch test" />
-    <option name="LAST_COMMIT_MESSAGE" value="web-dev Branch test" />
+    <MESSAGE value="web-dev Branch test 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="web-dev Branch test 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
