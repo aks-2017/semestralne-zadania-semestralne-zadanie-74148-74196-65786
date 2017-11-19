@@ -447,6 +447,9 @@
       <height>27</height>
      </rect>
     </property>
+    <property name="text">
+     <string>123</string>
+    </property>
    </widget>
    <widget class="QLineEdit" name="guiLeDstPortNumber">
     <property name="geometry">
@@ -456,6 +459,9 @@
       <width>80</width>
       <height>27</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>4567</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="guiLeSrcPrefix">
@@ -519,6 +525,21 @@
       <height>27</height>
      </rect>
     </property>
+    <item>
+     <property name="text">
+      <string>Fwd Janko</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Fwd Samko</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Fwd Danko</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

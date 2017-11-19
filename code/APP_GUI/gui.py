@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui.ui'
 #
-# Created: Fri Nov 17 15:42:15 2017
+# Created: Sun Nov 19 06:17:55 2017
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -161,6 +161,9 @@ class Ui_MainWindow(object):
         self.guiCbForwarder = QtGui.QComboBox(self.centralwidget)
         self.guiCbForwarder.setGeometry(QtCore.QRect(100, 10, 171, 27))
         self.guiCbForwarder.setObjectName(_fromUtf8("guiCbForwarder"))
+        self.guiCbForwarder.addItem(_fromUtf8(""))
+        self.guiCbForwarder.addItem(_fromUtf8(""))
+        self.guiCbForwarder.addItem(_fromUtf8(""))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1224, 25))
@@ -221,8 +224,13 @@ class Ui_MainWindow(object):
         self.guiCbL4Protocol.setItemText(0, _translate("MainWindow", "TCP", None))
         self.guiCbL4Protocol.setItemText(1, _translate("MainWindow", "UDP", None))
         self.guiCbL4Protocol.setItemText(2, _translate("MainWindow", "ICMP", None))
+        self.guiLeSrcPortNumber.setText(_translate("MainWindow", "123", None))
+        self.guiLeDstPortNumber.setText(_translate("MainWindow", "4567", None))
         self.guiLeSrcPrefix.setText(_translate("MainWindow", "24", None))
         self.label_14.setText(_translate("MainWindow", "/", None))
         self.guiLeDstPrefix.setText(_translate("MainWindow", "24", None))
         self.label_15.setText(_translate("MainWindow", "/", None))
+        self.guiCbForwarder.setItemText(0, _translate("MainWindow", "Fwd Janko", None))
+        self.guiCbForwarder.setItemText(1, _translate("MainWindow", "Fwd Samko", None))
+        self.guiCbForwarder.setItemText(2, _translate("MainWindow", "Fwd Danko", None))
 
