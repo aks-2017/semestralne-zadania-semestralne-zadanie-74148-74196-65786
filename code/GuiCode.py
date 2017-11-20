@@ -1,4 +1,6 @@
 import string
+import requests
+import json
 from APP_GUI.gui import *
 from AclRule import Acl as AclClass
 from PyQt4 import QtCore, QtGui
@@ -10,6 +12,10 @@ from Forwarder import *
 ui = None
 fwList = []
 selectedFw = None
+
+
+print ("udene klobasy")
+
 
 def addNewRuleToAcl():
     # add New Rule to ACL from GUI text fields
@@ -101,6 +107,21 @@ def loadForwardersToGuiCbForwarder():
 def actionPerformedGuiBtnDelete():
     global ui
     print "actionPerformedGuiBtnDelete"
+
+
+
+    r = requests.get('http://localhost:8080/stats/switches')
+    r.status_code
+
+    # extracting data in json format
+    data = r.json()
+    print (data)
+
+    mec = {'nw_src': '10.0.0.2', 'nw_proto':'1', 'dl_type': '2048'}
+    data = {"dpid": "1", "priority":"65222", "table_id":"0", "match": mec}
+    r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
+    r2.status_code
+
 
 
 def actionPerformedGuiBtnEdit():
