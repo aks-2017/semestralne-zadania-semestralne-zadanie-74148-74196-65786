@@ -2,9 +2,9 @@ import string
 import requests
 import json
 from APP_GUI.gui import *
-#from AclRule import Acl as AclClass
+from AclRule import Acl as AclClass
 from PyQt4 import QtCore, QtGui
-#from Forwarder import *
+from Forwarder import *
 
 #myAcl = AclClass("192.168.2.1", "permit")
 #myAcl.printState()
