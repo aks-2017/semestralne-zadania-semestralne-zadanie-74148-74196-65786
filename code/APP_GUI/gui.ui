@@ -65,49 +65,79 @@
     <property name="columnCount">
      <number>9</number>
     </property>
+    <attribute name="horizontalHeaderMinimumSectionSize">
+     <number>20</number>
+    </attribute>
     <column>
      <property name="text">
       <string>ID</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignHCenter|AlignVCenter|AlignCenter</set>
      </property>
     </column>
     <column>
      <property name="text">
       <string>Action</string>
      </property>
+     <property name="textAlignment">
+      <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+     </property>
     </column>
     <column>
      <property name="text">
       <string>Src. MAC</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignHCenter|AlignVCenter|AlignCenter</set>
      </property>
     </column>
     <column>
      <property name="text">
       <string>Dst. MAC</string>
      </property>
+     <property name="textAlignment">
+      <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+     </property>
     </column>
     <column>
      <property name="text">
       <string>Src. IP</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignHCenter|AlignVCenter|AlignCenter</set>
      </property>
     </column>
     <column>
      <property name="text">
       <string>Dst. IP</string>
      </property>
+     <property name="textAlignment">
+      <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+     </property>
     </column>
     <column>
      <property name="text">
       <string>L4. Protocol</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignHCenter|AlignVCenter|AlignCenter</set>
      </property>
     </column>
     <column>
      <property name="text">
       <string>Interface</string>
      </property>
+     <property name="textAlignment">
+      <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+     </property>
     </column>
     <column>
      <property name="text">
       <string>Direction</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignHCenter|AlignVCenter|AlignCenter</set>
      </property>
     </column>
    </widget>
@@ -332,12 +362,17 @@
     </property>
     <item>
      <property name="text">
-      <string>In</string>
+      <string>IN</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>Out</string>
+      <string>OUT</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>BOTH</string>
      </property>
     </item>
    </widget>
@@ -525,21 +560,6 @@
       <height>27</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string>Fwd Janko</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Fwd Samko</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Fwd Danko</string>
-     </property>
-    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
