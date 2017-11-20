@@ -9,7 +9,7 @@ class L2Switch(app_manager.RyuApp):
         super(L2Switch, self).__init__(*args, **kwargs)
 
         print ("klobasa")
-
+        printf ("nova brancha 2")
 
         @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
         def packet_in_handler(self, ev):
