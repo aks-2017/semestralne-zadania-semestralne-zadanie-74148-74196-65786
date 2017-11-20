@@ -11,6 +11,10 @@ ui = None
 fwList = []
 selectedFw = None
 
+def addNewRuleToAcl():
+    # add New Rule to ACL from GUI text fields
+    print "ahoj"
+
 def loadForwarders(list):
     global selectedFw
     fw1 = Forwarder(1, "Janko")
@@ -23,10 +27,10 @@ def loadForwarders(list):
         selectedFw = list[0]
 
 def testFunctionForFW():
-    selectedFw.addRuleToAcl( AclClass("permit", 1, "aa:aa:aa:bb:bb:bb", "cc:cc:cc:dd:dd:dd", "192.168.5.2", "192.168.3.5", 20, 25, "UDP","s0/0/0", "IN"))
+    selectedFw.addRuleToAcl( AclClass("permit", 1, "aa:aa:aa:bb:bb:bb", "cc:cc:cc:dd:dd:dd", "192.168.5.2", "192.168.3.5", 20, 25, "UDP","s0/0/0", "IN",123,456))
     selectedFw.addRuleToAcl(
-        AclClass("deny", 2, "aa:aa:aa:bb:bb:bb", "cc:cc:cc:dd:dd:dd", "192.168.5.2", "192.168.3.5", 20, 25, "UDP",
-                 "s0/0/0", "IN"))
+        AclClass("deny", 2, "aa:aa:aa:bb:bb:bb", "cc:cc:cc:dd:dd:dd", "192.168.5.2", "192.168.3.5", 20, 25, "TCP",
+                 "s0/0/0", "IN",321,654))
     selectedFw.printAclRules()
 
 
@@ -50,9 +54,9 @@ def loadSelectedForwarderToGuiTblFirewallRules():
         ui.guiTblFirewallRules.setItem(index, 1, QtGui.QTableWidgetItem(i.action))
         ui.guiTblFirewallRules.setItem(index, 2, QtGui.QTableWidgetItem(i.srcMac))
         ui.guiTblFirewallRules.setItem(index, 3, QtGui.QTableWidgetItem(i.dstMac))
-        ui.guiTblFirewallRules.setItem(index, 4, QtGui.QTableWidgetItem(i.srcIp))
-        ui.guiTblFirewallRules.setItem(index, 5, QtGui.QTableWidgetItem(i.dstIp))
-        ui.guiTblFirewallRules.setItem(index, 6, QtGui.QTableWidgetItem(i.l4Protocol))
+        ui.guiTblFirewallRules.setItem(index, 4, QtGui.QTableWidgetItem(i.srcIp+"/"+str(i.srcPrefix)))
+        ui.guiTblFirewallRules.setItem(index, 5, QtGui.QTableWidgetItem(i.dstIp+"/"+str(i.dstPrefix)))
+        ui.guiTblFirewallRules.setItem(index, 6, QtGui.QTableWidgetItem(i.l4Protocol+" ("+str(i.srcPortNumber)+"/"+str(i.dstPortNumber)+")"))
         ui.guiTblFirewallRules.setItem(index, 7, QtGui.QTableWidgetItem(i.interface))
         ui.guiTblFirewallRules.setItem(index, 8, QtGui.QTableWidgetItem(i.direction))
         index += 1
@@ -60,11 +64,20 @@ def loadSelectedForwarderToGuiTblFirewallRules():
     for x in range(0, 9):
         header.setResizeMode(x, QtGui.QHeaderView.ResizeToContents)
 
-
-def printStuff():
+def actionPerformedGuiChbEnableFirewall():
     global ui
-    ui.guiLeSrcMac.setText("Ahoj")
-    print "ahoj"
+    if ui.guiChbEnableFirewall.isChecked():
+        print "Firewall is activated"
+    else:
+        print "Firewall is deactivated"
+
+def loadForwardersToGuiCbForwarder():
+    global fwList
+    global ui, selectedFw
+    print "Loading Fw to Gui: "
+    for i in fwList:
+        print "Fw list: " + i.name
+        ui.guiCbForwarder.addItem(i.name)
 
 def actionPerformedGuiBtnDelete():
     global ui
@@ -97,31 +110,13 @@ def actionPerformedGuiCbL4Protocol():
         ui.guiLeSrcPortNumber.setDisabled(False)
         ui.guiLeDstPortNumber.setDisabled(False)
 
-
-def actionPerformedGuiChbEnableFirewall():
-    global ui
-    if ui.guiChbEnableFirewall.isChecked():
-        print "Firewall is activated"
-    else:
-        print "Firewall is deactivated"
-
-def loadForwardersToGuiCbForwarder():
-    global fwList
-    global ui, selectedFw
-    print "Loading Fw to Gui: "
-    for i in fwList:
-        print "Fw list: " + i.name
-        ui.guiCbForwarder.addItem(i.name)
-
-
 class GuiManager(Ui_MainWindow):
 
     def __init__(self):
         Ui_MainWindow.__init__(self)
 
     def start(self):
-        print "JOZKo"
-        print "stuff"
+        # add action performed functions
         self.guiBtnDelete.clicked.connect(actionPerformedGuiBtnDelete)
         self.guiBtnCreate.clicked.connect(actionPerformedGuiBtnCreate)
         self.guiBtnEdit.clicked.connect(actionPerformedGuiBtnDelete)
