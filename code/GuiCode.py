@@ -13,13 +13,32 @@ selectedFw = None
 
 def addNewRuleToAcl():
     # add New Rule to ACL from GUI text fields
-    print "ahoj"
+    global ui
+    print "Add new rule to acl"
+    action = str(ui.guiCbAction.currentText())
+    id = len(selectedFw.acl)+1
+    srcMac = ui.guiLeSrcMac.text()
+    dstMac = ui.guiLeDstMac.text()
+    srcIp = ui.guiLeSrcIp.text()
+    dstIp = ui.guiLeDstIp.text()
+    srcPrefix = ui.guiLeSrcPrefix.text()
+    dstPrefix =  ui.guiLeDstPrefix.text()
+    l4Protocol = str(ui.guiCbL4Protocol.currentText())
+    interface = str(ui.guiCbInterface.currentText())
+    direction = str(ui.guiCbDirection.currentText())
+    srcPortNumber = ui.guiLeSrcPortNumber.text()
+    dstPortNumber = ui.guiLeDstPortNumber.text()
+
+    selectedFw.addRuleToAcl(
+        AclClass(action, id, srcMac, dstMac, srcIp, dstIp, srcPrefix, dstPrefix, l4Protocol,
+                 interface, direction, srcPortNumber, dstPortNumber))
+    loadSelectedForwarderToGuiTblFirewallRules()
 
 def loadForwarders(list):
     global selectedFw
-    fw1 = Forwarder(1, "Janko")
-    fw2 = Forwarder(2, "Samko")
-    fw3 = Forwarder(3, "Danko")
+    fw1 = Forwarder(1, "Alfa")
+    fw2 = Forwarder(2, "Gama")
+    fw3 = Forwarder(3, "Delta")
     list.append(fw1)
     list.append(fw2)
     list.append(fw3)
@@ -91,6 +110,7 @@ def actionPerformedGuiBtnEdit():
 def actionPerformedGuiBtnCreate():
     global ui
     print "actionPerformedGuiBtnCreate"
+    addNewRuleToAcl()
 
 def actionPerformedGuiCbForwarder():
     global ui
