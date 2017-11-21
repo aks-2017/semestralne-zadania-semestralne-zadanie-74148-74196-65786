@@ -108,19 +108,23 @@ def actionPerformedGuiBtnDelete():
     global ui
     print "actionPerformedGuiBtnDelete"
 
-
-
-    r = requests.get('http://localhost:8080/stats/switches')
-    r.status_code
-
-    # extracting data in json format
-    data = r.json()
-    print (data)
-
-    mec = {'nw_src': '10.0.0.2', 'nw_proto':'1', 'dl_type': '2048'}
-    data = {"dpid": "1", "priority":"65222", "table_id":"0", "match": mec}
+    mec = {"type":"GOTO_TABLE", "table_id": 1}
+    data = {"dpid": "1", "table_id": "0", "priority": "65222", "table_id": "0", "actions": [mec]}
     r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
     r2.status_code
+
+
+    #r = requests.get('http://localhost:8080/stats/switches')
+    #r.status_code
+
+    # extracting data in json format
+    ##data = r.json()
+    #print (data)
+
+    #mec = {'nw_src': '10.0.0.2', 'nw_proto':'1', 'dl_type': '2048'}
+    #data = {"dpid": "1", "priority":"65222", "table_id":"0", "match": mec}
+    #r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
+    #r2.status_code
 
 
 
