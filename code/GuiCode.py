@@ -108,22 +108,22 @@ def actionPerformedGuiBtnDelete():
     global ui
     print "actionPerformedGuiBtnDelete"
 
-    mec = {"type":"GOTO_TABLE", "table_id": 1}
-    data = {"dpid": "1", "table_id": "0", "priority": "65222", "table_id": "0", "actions": [mec]}
-    r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
-    r2.status_code
+    #FIRST ENTRY FOR GOTO
+    #mec = {"type":"GOTO_TABLE", "table_id": 1, }
+    #data = {"dpid": "1", "table_id": "0", "priority": "65535", "actions": [mec]}
+    #r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
+    #r2.status_code
 
-
+    #GET FOR NUMBER OF FORWARDERS
     #r = requests.get('http://localhost:8080/stats/switches')
     #r.status_code
 
-    # extracting data in json format
-    ##data = r.json()
-    #print (data)
 
-    #mec = {'nw_src': '10.0.0.2', 'nw_proto':'1', 'dl_type': '2048'}
-    #data = {"dpid": "1", "priority":"65222", "table_id":"0", "match": mec}
-    #r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
+
+    #POST FOR DELETION OF ENRTY
+    #mec = {"type":"GOTO_TABLE", "table_id": 1}
+    #data = {"dpid": "1", "table_id": "0", "priority": "22222", "actions": [mec]}
+    #r2 = requests.post('http://localhost:8080/stats/flowentry/delete', data=json.dumps(data))
     #r2.status_code
 
 
@@ -132,10 +132,25 @@ def actionPerformedGuiBtnEdit():
     global ui
     print "actionPerformedGuiBtnEdit"
 
+
 def actionPerformedGuiBtnCreate():
     global ui
     print "actionPerformedGuiBtnCreate"
-    addNewRuleToAcl()
+
+    # POST FOR SPECIFIC ENTRY
+
+    data2 = {}
+    data2['nw_src'] = str(ui.guiLeSrcIp.text())
+
+    data2['nw_dst'] = str(ui.guiLeDstIp.text())
+
+    data = {"dpid": "1", "priority": "22222", "table_id": "0", "match":
+            dict(data2, **{'nw_proto': '1', 'dl_type': '2048'})}
+
+    r = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
+    r.status_code
+
+    #addNewRuleToAcl()
 
 def actionPerformedGuiCbForwarder():
     global ui
