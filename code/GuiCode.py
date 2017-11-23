@@ -17,6 +17,18 @@ selectedFw = None
 print ("udene klobasy")
 
 
+# LAST ENTRY TAB #1 FOR CONTROLLER LOOKUP
+# mec = {"type":"GOTO_TABLE", "table_id": 1, }
+# data = {"dpid": "1", "table_id": "0", "priority": "65535", "actions": [mec]}
+# r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
+# r2.status_code
+
+
+# GET FOR NUMBER OF FORWARDERS
+# r = requests.get('http://localhost:8080/stats/switches')
+# r.status_code
+
+
 def addNewRuleToAcl():
     # add New Rule to ACL from GUI text fields
     global ui
@@ -108,16 +120,6 @@ def actionPerformedGuiBtnDelete():
     global ui
     print "actionPerformedGuiBtnDelete"
 
-    #FIRST ENTRY FOR GOTO
-    #mec = {"type":"GOTO_TABLE", "table_id": 1, }
-    #data = {"dpid": "1", "table_id": "0", "priority": "65535", "actions": [mec]}
-    #r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
-    #r2.status_code
-
-    #GET FOR NUMBER OF FORWARDERS
-    #r = requests.get('http://localhost:8080/stats/switches')
-    #r.status_code
-
 
 
     #POST FOR DELETION OF ENRTY
@@ -125,6 +127,7 @@ def actionPerformedGuiBtnDelete():
     #data = {"dpid": "1", "table_id": "0", "priority": "22222", "actions": [mec]}
     #r2 = requests.post('http://localhost:8080/stats/flowentry/delete', data=json.dumps(data))
     #r2.status_code
+
 
 
 
@@ -139,13 +142,42 @@ def actionPerformedGuiBtnCreate():
 
     # POST FOR SPECIFIC ENTRY
 
-    data2 = {}
-    data2['nw_src'] = str(ui.guiLeSrcIp.text())
+    interface = str(ui.guiCbInterface.currentText())
+    direction = str(ui.guiCbDirection.currentText())
 
-    data2['nw_dst'] = str(ui.guiLeDstIp.text())
+    ACL_match_data = {}
 
-    data = {"dpid": "1", "priority": "22222", "table_id": "0", "match":
-            dict(data2, **{'nw_proto': '1', 'dl_type': '2048'})}
+    if ui.guiLeSrcIp.text():
+        ACL_match_data['nw_src'] = str(ui.guiLeSrcIp.text()) + '/' + str(ui.guiLeSrcPrefix.text())
+
+    if ui.guiLeDstIp.text():
+        ACL_match_data['nw_dst'] = str(ui.guiLeDstIp.text()) + "/" + str(ui.guiLeDstPrefix.text())
+
+    if ui.guiLeSrcMac.text():
+        ACL_match_data['dl_src'] = str(ui.guiLeSrcMac.text())
+
+    if ui.guiLeDstMac.text():
+        ACL_match_data['dl_dst'] = str(ui.guiLeDstMac.text())
+
+    if ui.guiLeDstPortNumber.text():
+        ACL_match_data['tp_dst'] = str(ui.guiLeDstPortNumber.text())
+
+    if ui.guiLeSrcPortNumber.text():
+        ACL_match_data['tp_src'] = str(ui.guiLeSrcPortNumber.text())
+
+    if str(ui.guiCbL4Protocol.currentText()) == 'TCP':
+        ACL_match_data['nw_proto'] = 6
+    elif str(ui.guiCbL4Protocol.currentText()) == 'UDP':
+        ACL_match_data['nw_proto'] = 17
+    elif str(ui.guiCbL4Protocol.currentText()) == 'ICMP':
+        ACL_match_data['nw_proto'] = 1
+
+    ACL_result = {}
+    if ui.guiCbAction.currentText() == 'Permit':
+        ACL_result = {"type": "GOTO_TABLE", "table_id": 1}
+
+    data = {"dpid": "1", "priority": "1", "table_id": "0", "match":
+            dict(ACL_match_data, **{'dl_type': '2048'}), "actions": [ACL_result]}
 
     r = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
     r.status_code
