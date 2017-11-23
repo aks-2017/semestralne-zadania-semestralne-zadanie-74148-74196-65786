@@ -17,18 +17,6 @@ selectedFw = None
 print ("udene klobasy")
 
 
-# LAST ENTRY TAB #1 FOR CONTROLLER LOOKUP
-# mec = {"type":"GOTO_TABLE", "table_id": 1, }
-# data = {"dpid": "1", "table_id": "0", "priority": "65535", "actions": [mec]}
-# r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
-# r2.status_code
-
-
-# GET FOR NUMBER OF FORWARDERS
-# r = requests.get('http://localhost:8080/stats/switches')
-# r.status_code
-
-
 def addNewRuleToAcl():
     # add New Rule to ACL from GUI text fields
     global ui
@@ -54,12 +42,28 @@ def addNewRuleToAcl():
 
 def loadForwarders(list):
     global selectedFw
-    fw1 = Forwarder(1, "Alfa")
-    fw2 = Forwarder(2, "Gama")
-    fw3 = Forwarder(3, "Delta")
-    list.append(fw1)
-    list.append(fw2)
-    list.append(fw3)
+
+    # GET FOR NUMBER OF FORWARDERS
+    r = requests.get('http://localhost:8080/stats/switches')
+    result = r.content.translate(None, '[] ')
+
+    # LAST ENTRY TAB #0 FOR IMPLICIT PERMIT
+    mec = {"type": "GOTO_TABLE", "table_id": 1, }
+
+
+    mn_position = 0
+    for x in result.split(','):
+        print x
+        list.append(Forwarder(mn_position, "Forwarder s"+x))
+        mn_position+1
+
+        data = {"dpid": x, "table_id": "0", "priority": "0", "actions": [mec]}
+        r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
+        r2.status_code
+
+    if mn_position == 0:
+        list.append(Forwarder(mn_position, "No Forwarder connected"))
+
     if selectedFw is None:
         selectedFw = list[0]
 
@@ -136,15 +140,7 @@ def actionPerformedGuiBtnEdit():
     print "actionPerformedGuiBtnEdit"
 
 
-def actionPerformedGuiBtnCreate():
-    global ui
-    print "actionPerformedGuiBtnCreate"
-
-    # POST FOR SPECIFIC ENTRY
-
-    interface = str(ui.guiCbInterface.currentText())
-    direction = str(ui.guiCbDirection.currentText())
-
+def loadUserData():
     ACL_match_data = {}
 
     if ui.guiLeSrcIp.text():
@@ -172,12 +168,25 @@ def actionPerformedGuiBtnCreate():
     elif str(ui.guiCbL4Protocol.currentText()) == 'ICMP':
         ACL_match_data['nw_proto'] = 1
 
+    return ACL_match_data
+
+
+def actionPerformedGuiBtnCreate():
+    global ui
+    print "actionPerformedGuiBtnCreate"
+
+    # POST FOR SPECIFIC ENTRY
+    #DPID refers to (switchID + 1)
+
+    interface = str(ui.guiCbInterface.currentText())
+    direction = str(ui.guiCbDirection.currentText())
+
     ACL_result = {}
     if ui.guiCbAction.currentText() == 'Permit':
         ACL_result = {"type": "GOTO_TABLE", "table_id": 1}
 
-    data = {"dpid": "1", "priority": "1", "table_id": "0", "match":
-            dict(ACL_match_data, **{'dl_type': '2048'}), "actions": [ACL_result]}
+    data = {"dpid": "2", "priority": "1", "table_id": "0", "match":
+            dict(loadUserData(), **{'dl_type': '2048'}), "actions": [ACL_result]}
 
     r = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
     r.status_code
