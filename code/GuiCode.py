@@ -50,13 +50,21 @@ def loadForwarders(list):
     # LAST ENTRY TAB #0 FOR IMPLICIT PERMIT
     mec = {"type": "GOTO_TABLE", "table_id": 1, }
 
-
     mn_position = 0
     for x in result.split(','):
-        print x
         list.append(Forwarder(mn_position, "Forwarder s"+x))
         mn_position+1
 
+        #Check whether any ACL entires exist in FlowTable0 befor initalizing app
+        #and if any, add to GUI and app structures
+        r = requests.get('http://localhost:8080/stats/flow/'+x, data=json.dumps({'table_id': '0'}))
+        print r.content
+
+
+        #TODO add entries to GUI and internal structures, if returned any
+
+
+        # LAST ENTRY TAB #0 FOR IMPLICIT PERMIT
         data = {"dpid": x, "table_id": "0", "priority": "0", "actions": [mec]}
         r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
         r2.status_code
@@ -68,7 +76,6 @@ def loadForwarders(list):
         selectedFw = list[0]
 
 def testFunctionForFW():
-    selectedFw.addRuleToAcl( AclClass("permit", 1, "aa:aa:aa:bb:bb:bb", "cc:cc:cc:dd:dd:dd", "192.168.5.2", "192.168.3.5", 20, 25, "UDP","s0/0/0", "IN",123,456))
     selectedFw.addRuleToAcl(
         AclClass("deny", 2, "aa:aa:aa:bb:bb:bb", "cc:cc:cc:dd:dd:dd", "192.168.5.2", "192.168.3.5", 20, 25, "TCP",
                  "s0/0/0", "IN",321,654))
@@ -106,6 +113,9 @@ def loadSelectedForwarderToGuiTblFirewallRules():
         header.setResizeMode(x, QtGui.QHeaderView.ResizeToContents)
 
 def actionPerformedGuiChbEnableFirewall():
+
+        #TODO Possible implementation as ACL statement w/ priority of 65535 and actions "GOTO_TABLE table_id = 1"
+
     global ui
     if ui.guiChbEnableFirewall.isChecked():
         print "Firewall is activated"
@@ -124,15 +134,13 @@ def actionPerformedGuiBtnDelete():
     global ui
     print "actionPerformedGuiBtnDelete"
 
-
+    #TODO load variables (as separate function, used also in EDIT) from GUI to JSON attributes
 
     #POST FOR DELETION OF ENRTY
     #mec = {"type":"GOTO_TABLE", "table_id": 1}
     #data = {"dpid": "1", "table_id": "0", "priority": "22222", "actions": [mec]}
-    #r2 = requests.post('http://localhost:8080/stats/flowentry/delete', data=json.dumps(data))
+    #r2 = requests.post('http://localhost:8080/stats/flowentry/delete_strict', data=json.dumps(data))
     #r2.status_code
-
-
 
 
 def actionPerformedGuiBtnEdit():
@@ -140,7 +148,7 @@ def actionPerformedGuiBtnEdit():
     print "actionPerformedGuiBtnEdit"
 
 
-def loadUserData():
+def loadUserData():     #Loading from TextFields
     ACL_match_data = {}
 
     if ui.guiLeSrcIp.text():
@@ -177,6 +185,8 @@ def actionPerformedGuiBtnCreate():
 
     # POST FOR SPECIFIC ENTRY
     #DPID refers to (switchID + 1)
+
+    #TODO interface and direction NOT included yet
 
     interface = str(ui.guiCbInterface.currentText())
     direction = str(ui.guiCbDirection.currentText())
