@@ -91,17 +91,26 @@ def loadForwardersFlowTableAction(x):
     #print r.content
     jasonData = json.loads(requestik.content)
     try:
-       loadFromForwardersFlowTable(jasonData)
+       loadFromForwardersFlowTable(jasonData, pom)
     except AttributeError:
        print "Nepodarilo sa najst zvoleny forwarder"
 
 
 # nacita z jasonData z GET obsah flow table0
-def loadFromForwardersFlowTable(jasonData):
+def loadFromForwardersFlowTable(jasonData, pom):
 
-    mojeData = jasonData["1"]
-    aclID = 65500
+    mojeData = jasonData[pom]
+    aclID = 0
     for iter1 in mojeData:
+        srcMac = "0"
+        dstMac = "0"
+        srcIP = "0"
+        dstIP = "0"
+        srcPrefix = "0"
+        dstPrefix = "0"
+        srcPort = "0"
+        dstPort = "0"
+        protocol = "0"
         print "Pokusam sa hladat"
         for iter2 in iter1.iteritems():
             # if ("priority" in iter2):  ked Kubo doda priority bunku
@@ -127,12 +136,14 @@ def loadFromForwardersFlowTable(jasonData):
                     if "tp_dst" in tupleiter:
                         dstPort = tupleiter["tp_dst"]
             if ("actions" in iter2):
-                if "GOTO_TABLE:1" in iter2:
+                if "GOTO_TABLE:1" in iter2[1]:
                     actionGui = "permit"
                 else:
                     actionGui = "deny"
+            if ("priority" in iter2):
+                aclID = iter2[1]
         testFunctionForFW(actionGui, aclID, srcMac, srcPrefix, dstMac, dstPrefix, srcIP, dstIP, protocol, "", "", srcPort, dstPort)
-        aclID -= 100
+        #aclID -= 100
 
 def translateProtocol(numberOfProtocol):
     if numberOfProtocol == 1:
@@ -156,7 +167,7 @@ def loadSelectedForwarder(forwarderName):
         if i.name == forwarderName:
             print "I found forwarder: "+i.name+" will load it to Table"
             selectedFw = i
-            print "ahoj ahoj ahoj"+str(selectedFw.acl)
+            #print "ahoj ahoj ahoj"+str(selectedFw.acl)
     loadSelectedForwarderToGuiTblFirewallRules()
 
 def loadSelectedForwarderToGuiTblFirewallRules():
@@ -165,6 +176,9 @@ def loadSelectedForwarderToGuiTblFirewallRules():
     index = 0
     ui.guiTblFirewallRules.setRowCount(len(selectedFw.acl))
     loadForwardersFlowTableAction(ui.guiCbForwarder.currentText())
+    while (ui.guiTblFirewallRules.rowCount() > 0):
+            ui.guiTblFirewallRules.removeRow(0)
+
     for i in selectedFw.acl:
         print "I will ad this rule"
         ui.guiTblFirewallRules.setItem(index,0, QtGui.QTableWidgetItem(str(i.id)))
@@ -180,6 +194,8 @@ def loadSelectedForwarderToGuiTblFirewallRules():
     header = ui.guiTblFirewallRules.horizontalHeader()
     for x in range(0, 9):
         header.setResizeMode(x, QtGui.QHeaderView.ResizeToContents)
+
+
 
 def actionPerformedGuiChbEnableFirewall():
 
@@ -204,6 +220,21 @@ def actionPerformedGuiBtnDelete():
     print "actionPerformedGuiBtnDelete"
 
     #TODO load variables (as separate function, used also in EDIT) from GUI to JSON attributes
+
+    ACL_result = {}
+    if ui.guiCbAction.currentText() == 'Permit':
+        ACL_result = {"type": "GOTO_TABLE", "table_id": 1}
+    else:
+        ACL_result = {"type": "DROP"}
+
+    P = ui.guiTblFirewallRules.selectionModel().selectedRows()
+    P = ui.guiTblFirewallRules.itemFromIndex(P[0])
+    P = int(P.text())
+    data = {"dpid": "1", "priority": str(P), "table_id": "0", "match":
+        dict(loadUserData(), **{'dl_type': '2048'}), "actions": [ACL_result]}
+
+    r = requests.post('http://localhost:8080/stats/flowentry/delete_strict', data=json.dumps(data))
+    r.status_code
 
     #POST FOR DELETION OF ENRTY
     #mec = {"type":"GOTO_TABLE", "table_id": 1}
@@ -267,9 +298,9 @@ def actionPerformedGuiBtnCreate():
         ACL_result = {"type": "DROP"}
 
 
-    dpidik = len(selectedFw.acl)
-    print dpidik
-    data = {"dpid": dpidik, "priority": "1", "table_id": "0", "match":
+    #dpidik = len(selectedFw.acl)
+    #print dpidik
+    data = {"dpid": "1", "priority": "1", "table_id": "0", "match":
             dict(loadUserData(), **{'dl_type': '2048'}), "actions": [ACL_result]}
 
     r = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
