@@ -5,6 +5,7 @@ from APP_GUI.gui import *
 from AclRule import Acl as AclClass
 from PyQt4 import QtCore, QtGui
 from Forwarder import *
+from netaddr import IPAddress
 
 #myAcl = AclClass("192.168.2.1", "permit")
 #myAcl.printState()
@@ -41,31 +42,31 @@ def addNewRuleToAcl():
     loadSelectedForwarderToGuiTblFirewallRules()
 
 def loadForwarders(list):
-    global selectedFw
+    global selectedFw, ui
 
     # GET FOR NUMBER OF FORWARDERS
     r = requests.get('http://localhost:8080/stats/switches')
     result = r.content.translate(None, '[] ')
 
     # LAST ENTRY TAB #0 FOR IMPLICIT PERMIT
-    mec = {"type": "GOTO_TABLE", "table_id": 1, }
+    actions = {"type": "GOTO_TABLE", "table_id": 1 }
+    actions1 = {"type": "GOTO_TABLE", "table_id": 2 }
+    match = {"nw_src": "10.0.0.1/24", "nw_proto": "1" }
 
     mn_position = 0
     for x in result.split(','):
         list.append(Forwarder(mn_position, "Forwarder s"+x))
-        mn_position+1
+        mn_position+=1
 
         #Check whether any ACL entires exist in FlowTable0 befor initalizing app
         #and if any, add to GUI and app structures
         r = requests.get('http://localhost:8080/stats/flow/'+x, data=json.dumps({'table_id': '0'}))
         print r.content
 
-
         #TODO add entries to GUI and internal structures, if returned any
 
-
         # LAST ENTRY TAB #0 FOR IMPLICIT PERMIT
-        data = {"dpid": x, "table_id": "0", "priority": "0", "actions": [mec]}
+        data = {"dpid": x, "table_id": "0", "priority": "0", "actions": [actions]}
         r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
         r2.status_code
 
@@ -75,20 +76,87 @@ def loadForwarders(list):
     if selectedFw is None:
         selectedFw = list[0]
 
-def testFunctionForFW():
-    selectedFw.addRuleToAcl(
-        AclClass("deny", 2, "aa:aa:aa:bb:bb:bb", "cc:cc:cc:dd:dd:dd", "192.168.5.2", "192.168.3.5", 20, 25, "TCP",
-                 "s0/0/0", "IN",321,654))
-    selectedFw.printAclRules()
+    data = {"dpid": 1, "table_id": "0", "priority": "1", "match": [match], "actions": [actions1]}
+    r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
+    r2.status_code
 
+def loadForwardersFlowTableAction(x):
+    pom = 1
+    for i in fwList:
+        if i.name == x:
+            break
+        pom += 1
+    pom = str(pom)
+    requestik = requests.get('http://localhost:8080/stats/flow/'+pom, data=json.dumps({'table_id': '0'}))
+    #print r.content
+    jasonData = json.loads(requestik.content)
+    try:
+       loadFromForwardersFlowTable(jasonData)
+    except AttributeError:
+       print "Nepodarilo sa najst zvoleny forwarder"
+
+
+# nacita z jasonData z GET obsah flow table0
+def loadFromForwardersFlowTable(jasonData):
+
+    mojeData = jasonData["1"]
+    aclID = 65500
+    for iter1 in mojeData:
+        print "Pokusam sa hladat"
+        for iter2 in iter1.iteritems():
+            # if ("priority" in iter2):  ked Kubo doda priority bunku
+            #    print iter2[1]
+            if ("match" in iter2):
+                for tupleiter in iter2:
+                    if "nw_src" in tupleiter:
+                        IP, prefix = tupleiter["nw_src"].split('/')
+                        srcPrefix = IPAddress(prefix).netmask_bits()
+                        srcIP = IP
+                    if "nw_dst" in tupleiter:
+                        IP, prefix = tupleiter["nw_dst"].split('/')
+                        dstPrefix = IPAddress(prefix).netmask_bits()
+                        dstIP = IP
+                    if "dl_src" in tupleiter:
+                        srcMac = tupleiter["dl_src"]
+                    if "dl_dst" in tupleiter:
+                        dstMac = tupleiter["dl_dst"]
+                    if "nw_proto" in tupleiter:
+                        protocol = translateProtocol(tupleiter["nw_proto"])
+                    if "tp_src" in tupleiter:
+                        srcPort = tupleiter["tp_src"]
+                    if "tp_dst" in tupleiter:
+                        dstPort = tupleiter["tp_dst"]
+            if ("actions" in iter2):
+                if "GOTO_TABLE:1" in iter2:
+                    actionGui = "permit"
+                else:
+                    actionGui = "deny"
+        testFunctionForFW(actionGui, aclID, srcMac, srcPrefix, dstMac, dstPrefix, srcIP, dstIP, protocol, "", "", srcPort, dstPort)
+        aclID -= 100
+
+def translateProtocol(numberOfProtocol):
+    if numberOfProtocol == 1:
+        return "ICMP"
+    elif numberOfProtocol == 6:
+        return "TCP"
+    elif numberOfProtocol == 17:
+        return "UDP"
+
+# akciu, id, src MAC, dst MAC, src IP, dst IP, protokol, interface, smer, src port, dst port
+def testFunctionForFW(actionGui, id, srcMac, srcPrefix, dstMac, dstPrefix, srcIP, dstIP, protocol, inter, direct, srcPort, dstPort):
+    selectedFw.addRuleToAcl(
+        AclClass(actionGui, id, srcMac, dstMac, srcIP, dstIP, srcPrefix, dstPrefix, protocol,
+                 inter, direct,srcPort,dstPort))
+    selectedFw.printAclRules()
 
 def loadSelectedForwarder(forwarderName):
     global fwList, selectedFw
     print "Searching Forwarder in fwList: "+forwarderName+" to GUI"
     for i in fwList:
         if i.name == forwarderName:
-            print "I found forwarder: "+i.name+"i will load it to Table"
+            print "I found forwarder: "+i.name+" will load it to Table"
             selectedFw = i
+            print "ahoj ahoj ahoj"+str(selectedFw.acl)
     loadSelectedForwarderToGuiTblFirewallRules()
 
 def loadSelectedForwarderToGuiTblFirewallRules():
@@ -96,6 +164,7 @@ def loadSelectedForwarderToGuiTblFirewallRules():
     ui.guiTblFirewallRules.setRowCount(0)
     index = 0
     ui.guiTblFirewallRules.setRowCount(len(selectedFw.acl))
+    loadForwardersFlowTableAction(ui.guiCbForwarder.currentText())
     for i in selectedFw.acl:
         print "I will ad this rule"
         ui.guiTblFirewallRules.setItem(index,0, QtGui.QTableWidgetItem(str(i.id)))
@@ -194,8 +263,13 @@ def actionPerformedGuiBtnCreate():
     ACL_result = {}
     if ui.guiCbAction.currentText() == 'Permit':
         ACL_result = {"type": "GOTO_TABLE", "table_id": 1}
+    else:
+        ACL_result = {"type": "DROP"}
 
-    data = {"dpid": "2", "priority": "1", "table_id": "0", "match":
+
+    dpidik = len(selectedFw.acl)
+    print dpidik
+    data = {"dpid": dpidik, "priority": "1", "table_id": "0", "match":
             dict(loadUserData(), **{'dl_type': '2048'}), "actions": [ACL_result]}
 
     r = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
@@ -248,7 +322,7 @@ if __name__ == "__main__":
 
     loadForwarders(fwList)
     loadForwardersToGuiCbForwarder()
-    testFunctionForFW()
+    #testFunctionForFW()
     loadSelectedForwarder(ui.guiCbForwarder.currentText())
 
     sys.exit(app.exec_())
