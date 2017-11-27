@@ -66,7 +66,7 @@ def loadForwarders(list):
         #TODO add entries to GUI and internal structures, if returned any
 
         # LAST ENTRY TAB #0 FOR IMPLICIT PERMIT
-        data = {"dpid": x, "table_id": "0", "priority": "65535", "actions": [actions]}
+        data = {"dpid": x, "table_id": "0", "priority": "0", "actions": [actions]}
         #print data
         r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
         r2.status_code
@@ -118,13 +118,21 @@ def loadFromForwardersFlowTable(jasonData, pom):
             if ("match" in iter2):
                 for tupleiter in iter2:
                     if "nw_src" in tupleiter:
-                        IP, prefix = tupleiter["nw_src"].split('/')
-                        srcPrefix = IPAddress(prefix).netmask_bits()
-                        srcIP = IP
+                        if "/" in tupleiter["nw_src"]:
+                            IP, prefix = tupleiter["nw_src"].split('/')
+                            srcPrefix = IPAddress(prefix).netmask_bits()
+                            srcIP = IP
+                        else:
+                            srcIP = tupleiter["nw_src"]
+                            srcPrefix = 0
                     if "nw_dst" in tupleiter:
-                        IP, prefix = tupleiter["nw_dst"].split('/')
-                        dstPrefix = IPAddress(prefix).netmask_bits()
-                        dstIP = IP
+                        if "/" in tupleiter["nw_dst"]:
+                            IP, prefix = tupleiter["nw_dst"].split('/')
+                            dstPrefix = IPAddress(prefix).netmask_bits()
+                            dstIP = IP
+                        else:
+                            dstIP = tupleiter["nw_dst"]
+                            dstPrefix = 0
                     if "dl_src" in tupleiter:
                         srcMac = tupleiter["dl_src"]
                     if "dl_dst" in tupleiter:
@@ -315,16 +323,26 @@ def loadSelectedRowData():     #Loading from TextFields
     #P = ui.guiTblFirewallRules.itemFromIndex(P[0]).text()
 
     if ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),4).text():
-        ACL_match_data['nw_src'] = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),4).text())
+        IP, maska = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),4).text()).split('/')
+        if IP is not "0":
+            ACL_match_data['nw_src'] = IP
+        if maska is not "0":
+            ACL_match_data['nw_src'] = IP + '/' + maska
 
     if ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),5).text():
-        ACL_match_data['nw_dst'] = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),5).text())
+        IP, maska = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(), 5).text()).split('/')
+        if IP is not "0":
+            ACL_match_data['nw_dst'] = IP
+        if maska is not "0":
+            ACL_match_data['nw_dst'] = IP + '/' + maska
 
     if ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),2).text():
-        ACL_match_data['dl_src'] = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),2).text())
+        if str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(), 2).text()) != "0":
+            ACL_match_data['dl_src'] = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),2).text())
 
     if ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),3).text():
-        ACL_match_data['dl_dst'] = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),3).text())
+        if str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(), 3).text()) != "0":
+            ACL_match_data['dl_dst'] = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),3).text())
 
     if ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),6).text():
         L4 = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),6).text())
