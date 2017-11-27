@@ -191,20 +191,27 @@ def loadSelectedForwarderToGuiTblFirewallRules():
     #        ui.guiTblFirewallRules.removeRow(0)
 
     for i in selectedFw.acl:
-        print "I will ad this rule"
-        ui.guiTblFirewallRules.setItem(index,0, QtGui.QTableWidgetItem(str(i.id)))
-        ui.guiTblFirewallRules.setItem(index, 1, QtGui.QTableWidgetItem(i.action))
-        ui.guiTblFirewallRules.setItem(index, 2, QtGui.QTableWidgetItem(i.srcMac))
-        ui.guiTblFirewallRules.setItem(index, 3, QtGui.QTableWidgetItem(i.dstMac))
-        ui.guiTblFirewallRules.setItem(index, 4, QtGui.QTableWidgetItem(i.srcIp+"/"+str(i.srcPrefix)))
-        ui.guiTblFirewallRules.setItem(index, 5, QtGui.QTableWidgetItem(i.dstIp+"/"+str(i.dstPrefix)))
-        ui.guiTblFirewallRules.setItem(index, 6, QtGui.QTableWidgetItem(i.l4Protocol+" ("+str(i.srcPortNumber)+"/"+str(i.dstPortNumber)+")"))
-        ui.guiTblFirewallRules.setItem(index, 7, QtGui.QTableWidgetItem(i.interface))
-        ui.guiTblFirewallRules.setItem(index, 8, QtGui.QTableWidgetItem(i.direction))
-        index += 1
-    header = ui.guiTblFirewallRules.horizontalHeader()
-    for x in range(0, 9):
-        header.setResizeMode(x, QtGui.QHeaderView.ResizeToContents)
+        if str(i.id) == '65535':
+            ui.guiTblFirewallRules.setRowCount(len(selectedFw.acl)-1)
+
+        if str(i.id) != '65535':
+
+            print "I will ad this rule"
+            ui.guiTblFirewallRules.setItem(index,0, QtGui.QTableWidgetItem(str(i.id)))
+            ui.guiTblFirewallRules.setItem(index, 1, QtGui.QTableWidgetItem(i.action))
+            ui.guiTblFirewallRules.setItem(index, 2, QtGui.QTableWidgetItem(i.srcMac))
+            ui.guiTblFirewallRules.setItem(index, 3, QtGui.QTableWidgetItem(i.dstMac))
+            ui.guiTblFirewallRules.setItem(index, 4, QtGui.QTableWidgetItem(i.srcIp+"/"+str(i.srcPrefix)))
+            ui.guiTblFirewallRules.setItem(index, 5, QtGui.QTableWidgetItem(i.dstIp+"/"+str(i.dstPrefix)))
+            ui.guiTblFirewallRules.setItem(index, 6, QtGui.QTableWidgetItem(i.l4Protocol+" ("+str(i.srcPortNumber)+"/"+str(i.dstPortNumber)+")"))
+            ui.guiTblFirewallRules.setItem(index, 7, QtGui.QTableWidgetItem(i.interface))
+            ui.guiTblFirewallRules.setItem(index, 8, QtGui.QTableWidgetItem(i.direction))
+            index += 1
+
+            header = ui.guiTblFirewallRules.horizontalHeader()
+
+            for x in range(0, 9):
+                header.setResizeMode(x, QtGui.QHeaderView.ResizeToContents)
 
 def actionPerformedGuiChbEnableFirewall():
 
@@ -213,8 +220,22 @@ def actionPerformedGuiChbEnableFirewall():
     global ui
     if ui.guiChbEnableFirewall.isChecked():
         print "Firewall is activated"
+
+        for x in range(1, len(fwList) + 1):
+            actions = {"type": "GOTO_TABLE", "table_id": 1}
+            data = {"dpid": x, "priority": '65535', "table_id": "0", "actions": [actions]}
+
+            r = requests.post('http://localhost:8080/stats/flowentry/delete_strict', data=json.dumps(data))
+            r.status_code
+
     else:
         print "Firewall is deactivated"
+
+        for x in range(1, len(fwList) + 1):
+            actions = {"type": "GOTO_TABLE", "table_id": 1}
+            data = {"dpid": x, "priority": '65535', "table_id": "0", "actions": [actions]}
+            r = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
+            r.status_code
 
 def loadForwardersToGuiCbForwarder():
     global fwList
@@ -223,6 +244,13 @@ def loadForwardersToGuiCbForwarder():
     for i in fwList:
         print "Fw list: " + i.name
         ui.guiCbForwarder.addItem(i.name)
+
+    # Firewall is Disabled by default
+    for x in range(1, len(fwList)+1):
+        actions = {"type": "GOTO_TABLE", "table_id": 1}
+        data = {"dpid": x, "priority": '65535', "table_id": "0", "actions": [actions]}
+        r = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
+        r.status_code
 
 def actionPerformedGuiBtnDelete():
     global ui
@@ -372,10 +400,8 @@ def actionPerformedGuiBtnCreate():
     # POST FOR SPECIFIC ENTRY
     #DPID refers to (switchID + 1)
 
-    #TODO interface and direction NOT included yet
-
-    #interface = str(ui.guiCbInterface.currentText())
-    #direction = str(ui.guiCbDirection.currentText())
+    if str(ui.guiLePriority.text()) == '65535':
+        return
 
     ACL_result = {}
     if ui.guiCbAction.currentText() == 'Permit':
@@ -446,6 +472,7 @@ if __name__ == "__main__":
     loadForwardersToGuiCbForwarder()
     #testFunctionForFW()
     loadSelectedForwarder(ui.guiCbForwarder.currentText())
+
 
     sys.exit(app.exec_())
 
