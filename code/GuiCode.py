@@ -292,11 +292,12 @@ def loadUserData():     #Loading from TextFields
     if ui.guiLeDstMac.text():
         ACL_match_data['dl_dst'] = str(ui.guiLeDstMac.text())
 
-    if ui.guiLeDstPortNumber.text():
-        ACL_match_data['tp_dst'] = str(ui.guiLeDstPortNumber.text())
+    if(ui.guiLeDstPortNumber.isEnabled()):
+        if ui.guiLeDstPortNumber.text():
+            ACL_match_data['tp_dst'] = str(ui.guiLeDstPortNumber.text())
 
-    if ui.guiLeSrcPortNumber.text():
-        ACL_match_data['tp_src'] = str(ui.guiLeSrcPortNumber.text())
+        if ui.guiLeSrcPortNumber.text():
+            ACL_match_data['tp_src'] = str(ui.guiLeSrcPortNumber.text())
 
     if str(ui.guiCbL4Protocol.currentText()) == 'TCP':
         ACL_match_data['nw_proto'] = 6
@@ -331,10 +332,10 @@ def loadSelectedRowData():     #Loading from TextFields
         SrcPort, DstPort = Ports.split('/')
         DstPort = DstPort.translate(None, ')')
 
-    if SrcPort != 0:
+    if int(SrcPort) is not 0:
         ACL_match_data['tp_src'] = SrcPort
 
-    if DstPort != 0:
+    if int(DstPort) is not 0:
         ACL_match_data['tp_dst'] = DstPort
 
     if str(Protocol) == 'TCP':
