@@ -50,8 +50,8 @@ def loadForwarders(list):
 
     # LAST ENTRY TAB #0 FOR IMPLICIT PERMIT
     actions = {"type": "GOTO_TABLE", "table_id": 1 }
-    actions1 = {"type": "GOTO_TABLE", "table_id": 2 }
-    match = {"nw_src": "10.0.0.1/24", "nw_proto": "1" }
+    #actions1 = {"type": "GOTO_TABLE", "table_id": 2 }
+    #match = {"nw_src": "10.0.0.1/24", "nw_proto": "1" }
 
     mn_position = 0
     for x in result.split(','):
@@ -66,7 +66,8 @@ def loadForwarders(list):
         #TODO add entries to GUI and internal structures, if returned any
 
         # LAST ENTRY TAB #0 FOR IMPLICIT PERMIT
-        data = {"dpid": x, "table_id": "0", "priority": "0", "actions": [actions]}
+        data = {"dpid": x, "table_id": "0", "priority": "65535", "actions": [actions]}
+        #print data
         r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
         r2.status_code
 
@@ -76,9 +77,9 @@ def loadForwarders(list):
     if selectedFw is None:
         selectedFw = list[0]
 
-    data = {"dpid": 1, "table_id": "0", "priority": "1", "match": [match], "actions": [actions1]}
-    r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
-    r2.status_code
+    #data = {"dpid": 1, "table_id": "0", "priority": "1", "match": [match], "actions": [actions1]}
+    #r2 = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
+    #r2.status_code
 
 def loadForwardersFlowTableAction(x):
     pom = 1
@@ -94,7 +95,6 @@ def loadForwardersFlowTableAction(x):
        loadFromForwardersFlowTable(jasonData, pom)
     except AttributeError:
        print "Nepodarilo sa najst zvoleny forwarder"
-
 
 # nacita z jasonData z GET obsah flow table0
 def loadFromForwardersFlowTable(jasonData, pom):
@@ -158,7 +158,7 @@ def testFunctionForFW(actionGui, id, srcMac, srcPrefix, dstMac, dstPrefix, srcIP
     selectedFw.addRuleToAcl(
         AclClass(actionGui, id, srcMac, dstMac, srcIP, dstIP, srcPrefix, dstPrefix, protocol,
                  inter, direct,srcPort,dstPort))
-    selectedFw.printAclRules()
+    #selectedFw.printAclRules()
 
 def loadSelectedForwarder(forwarderName):
     global fwList, selectedFw
@@ -174,10 +174,13 @@ def loadSelectedForwarderToGuiTblFirewallRules():
     global selectedFw, ui
     ui.guiTblFirewallRules.setRowCount(0)
     index = 0
-    ui.guiTblFirewallRules.setRowCount(len(selectedFw.acl))
+
+    #selectedFw.acl = none
+    del selectedFw.acl[:]
     loadForwardersFlowTableAction(ui.guiCbForwarder.currentText())
-    while (ui.guiTblFirewallRules.rowCount() > 0):
-            ui.guiTblFirewallRules.removeRow(0)
+    ui.guiTblFirewallRules.setRowCount(len(selectedFw.acl))
+    #while (ui.guiTblFirewallRules.rowCount() > 0):
+    #        ui.guiTblFirewallRules.removeRow(0)
 
     for i in selectedFw.acl:
         print "I will ad this rule"
@@ -194,8 +197,6 @@ def loadSelectedForwarderToGuiTblFirewallRules():
     header = ui.guiTblFirewallRules.horizontalHeader()
     for x in range(0, 9):
         header.setResizeMode(x, QtGui.QHeaderView.ResizeToContents)
-
-
 
 def actionPerformedGuiChbEnableFirewall():
 
@@ -222,16 +223,24 @@ def actionPerformedGuiBtnDelete():
     #TODO load variables (as separate function, used also in EDIT) from GUI to JSON attributes
 
     ACL_result = {}
-    if ui.guiCbAction.currentText() == 'Permit':
+    #pomPerm = ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),1)
+    #pomPerm = str(pomPerm.text())
+    if str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),1).text()) == 'permit':
         ACL_result = {"type": "GOTO_TABLE", "table_id": 1}
     else:
         ACL_result = {"type": "DROP"}
 
-    P = ui.guiTblFirewallRules.selectionModel().selectedRows()
-    P = ui.guiTblFirewallRules.itemFromIndex(P[0])
-    P = int(P.text())
-    data = {"dpid": "1", "priority": str(P), "table_id": "0", "match":
-        dict(loadUserData(), **{'dl_type': '2048'}), "actions": [ACL_result]}
+    pom = 1
+    for i in fwList:
+        if i.name == ui.guiCbForwarder.currentText():
+            break
+        pom += 1
+    pom = str(pom)
+
+    P = ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),0).text()
+    P = int(P)
+    data = {"dpid": pom, "priority": str(P), "table_id": "0", "match":
+        dict(loadSelectedRowData(), **{'dl_type': '2048'}), "actions": [ACL_result]}
 
     r = requests.post('http://localhost:8080/stats/flowentry/delete_strict', data=json.dumps(data))
     r.status_code
@@ -242,11 +251,31 @@ def actionPerformedGuiBtnDelete():
     #r2 = requests.post('http://localhost:8080/stats/flowentry/delete_strict', data=json.dumps(data))
     #r2.status_code
 
+    loadSelectedForwarder(ui.guiCbForwarder.currentText())
 
 def actionPerformedGuiBtnEdit():
     global ui
     print "actionPerformedGuiBtnEdit"
+    #/stats/flowentry/modify_strict
+    ACL_result = {}
+    if ui.guiCbAction.currentText() == 'Permit':
+        ACL_result = {"type": "GOTO_TABLE", "table_id": 1}
+    else:
+        ACL_result = {"type": "DROP"}
 
+    pom = 1
+    for i in fwList:
+        if i.name == ui.guiCbForwarder.currentText():
+            break
+        pom += 1
+    pom = str(pom)
+
+    data = {"dpid": pom, "priority": str(ui.guiLePriority.text()), "table_id": "0", "match":
+            dict(loadUserData(), **{'dl_type': '2048'}), "actions": [ACL_result]}
+
+    r = requests.post('http://localhost:8080/stats/flowentry/modify_strict', data=json.dumps(data))
+    r.status_code
+    loadSelectedForwarder(ui.guiCbForwarder.currentText())
 
 def loadUserData():     #Loading from TextFields
     ACL_match_data = {}
@@ -278,6 +307,44 @@ def loadUserData():     #Loading from TextFields
 
     return ACL_match_data
 
+def loadSelectedRowData():     #Loading from TextFields
+    ACL_match_data = {}
+
+    #P = ui.guiTblFirewallRules.selectionModel().selectedRows()
+    #P = ui.guiTblFirewallRules.itemFromIndex(P[0]).text()
+
+    if ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),4).text():
+        ACL_match_data['nw_src'] = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),4).text())
+
+    if ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),5).text():
+        ACL_match_data['nw_dst'] = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),5).text())
+
+    if ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),2).text():
+        ACL_match_data['dl_src'] = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),2).text())
+
+    if ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),3).text():
+        ACL_match_data['dl_dst'] = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),3).text())
+
+    if ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),6).text():
+        L4 = str(ui.guiTblFirewallRules.item(ui.guiTblFirewallRules.currentRow(),6).text())
+        Protocol, Ports = L4.split(' (')
+        SrcPort, DstPort = Ports.split('/')
+        DstPort = DstPort.translate(None, ')')
+
+    if SrcPort != 0:
+        ACL_match_data['tp_src'] = SrcPort
+
+    if DstPort != 0:
+        ACL_match_data['tp_dst'] = DstPort
+
+    if str(Protocol) == 'TCP':
+        ACL_match_data['nw_proto'] = 6
+    elif str(Protocol) == 'UDP':
+        ACL_match_data['nw_proto'] = 17
+    elif str(Protocol) == 'ICMP':
+        ACL_match_data['nw_proto'] = 1
+
+    return ACL_match_data
 
 def actionPerformedGuiBtnCreate():
     global ui
@@ -288,8 +355,8 @@ def actionPerformedGuiBtnCreate():
 
     #TODO interface and direction NOT included yet
 
-    interface = str(ui.guiCbInterface.currentText())
-    direction = str(ui.guiCbDirection.currentText())
+    #interface = str(ui.guiCbInterface.currentText())
+    #direction = str(ui.guiCbDirection.currentText())
 
     ACL_result = {}
     if ui.guiCbAction.currentText() == 'Permit':
@@ -297,14 +364,19 @@ def actionPerformedGuiBtnCreate():
     else:
         ACL_result = {"type": "DROP"}
 
+    pom = 1
+    for i in fwList:
+        if i.name == ui.guiCbForwarder.currentText():
+            break
+        pom += 1
+    pom = str(pom)
 
-    #dpidik = len(selectedFw.acl)
-    #print dpidik
-    data = {"dpid": "1", "priority": "1", "table_id": "0", "match":
+    data = {"dpid": pom, "priority": str(ui.guiLePriority.text()), "table_id": "0", "match":
             dict(loadUserData(), **{'dl_type': '2048'}), "actions": [ACL_result]}
 
     r = requests.post('http://localhost:8080/stats/flowentry/add', data=json.dumps(data))
     r.status_code
+    loadSelectedForwarder(ui.guiCbForwarder.currentText())
 
     #addNewRuleToAcl()
 
@@ -335,7 +407,7 @@ class GuiManager(Ui_MainWindow):
         # add action performed functions
         self.guiBtnDelete.clicked.connect(actionPerformedGuiBtnDelete)
         self.guiBtnCreate.clicked.connect(actionPerformedGuiBtnCreate)
-        self.guiBtnEdit.clicked.connect(actionPerformedGuiBtnDelete)
+        self.guiBtnEdit.clicked.connect(actionPerformedGuiBtnEdit)
         self.guiCbForwarder.currentIndexChanged.connect(actionPerformedGuiCbForwarder)
         self.guiChbEnableFirewall.stateChanged.connect(actionPerformedGuiChbEnableFirewall)
         self.guiCbL4Protocol.currentIndexChanged.connect(actionPerformedGuiCbL4Protocol)

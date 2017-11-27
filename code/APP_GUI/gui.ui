@@ -63,7 +63,7 @@
      </rect>
     </property>
     <property name="columnCount">
-     <number>9</number>
+     <number>7</number>
     </property>
     <column>
      <property name="text">
@@ -100,22 +100,12 @@
       <string>L4. Protocol</string>
      </property>
     </column>
-    <column>
-     <property name="text">
-      <string>Interface</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Direction</string>
-     </property>
-    </column>
    </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
       <x>820</x>
-      <y>120</y>
+      <y>84</y>
       <width>66</width>
       <height>17</height>
      </rect>
@@ -128,7 +118,7 @@
     <property name="geometry">
      <rect>
       <x>820</x>
-      <y>66</y>
+      <y>63</y>
       <width>121</width>
       <height>411</height>
      </rect>
@@ -136,37 +126,11 @@
     <property name="title">
      <string/>
     </property>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>30</y>
-       <width>66</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Interface</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>60</y>
-       <width>66</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Direction</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>90</y>
+       <y>54</y>
        <width>66</width>
        <height>17</height>
       </rect>
@@ -179,7 +143,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>120</y>
+       <y>84</y>
        <width>66</width>
        <height>17</height>
       </rect>
@@ -192,7 +156,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>150</y>
+       <y>114</y>
        <width>66</width>
        <height>17</height>
       </rect>
@@ -205,7 +169,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>180</y>
+       <y>144</y>
        <width>91</width>
        <height>17</height>
       </rect>
@@ -218,7 +182,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>210</y>
+       <y>174</y>
        <width>66</width>
        <height>17</height>
       </rect>
@@ -231,7 +195,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>240</y>
+       <y>204</y>
        <width>91</width>
        <height>17</height>
       </rect>
@@ -244,7 +208,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>270</y>
+       <y>234</y>
        <width>121</width>
        <height>17</height>
       </rect>
@@ -257,13 +221,26 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>300</y>
+       <y>264</y>
        <width>121</width>
        <height>17</height>
       </rect>
      </property>
      <property name="text">
       <string>Dst. Port Number</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>294</y>
+       <width>66</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Priority</string>
      </property>
     </widget>
    </widget>
@@ -306,46 +283,11 @@
      <string>Edit</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="guiCbInterface">
-    <property name="geometry">
-     <rect>
-      <x>950</x>
-      <y>90</y>
-      <width>80</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>All</string>
-     </property>
-    </item>
-   </widget>
-   <widget class="QComboBox" name="guiCbDirection">
-    <property name="geometry">
-     <rect>
-      <x>950</x>
-      <y>120</y>
-      <width>80</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>In</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Out</string>
-     </property>
-    </item>
-   </widget>
    <widget class="QComboBox" name="guiCbAction">
     <property name="geometry">
      <rect>
       <x>950</x>
-      <y>150</y>
+      <y>114</y>
       <width>80</width>
       <height>27</height>
      </rect>
@@ -365,7 +307,7 @@
     <property name="geometry">
      <rect>
       <x>950</x>
-      <y>180</y>
+      <y>144</y>
       <width>150</width>
       <height>27</height>
      </rect>
@@ -378,7 +320,7 @@
     <property name="geometry">
      <rect>
       <x>950</x>
-      <y>210</y>
+      <y>174</y>
       <width>150</width>
       <height>27</height>
      </rect>
@@ -391,7 +333,7 @@
     <property name="geometry">
      <rect>
       <x>950</x>
-      <y>240</y>
+      <y>204</y>
       <width>150</width>
       <height>27</height>
      </rect>
@@ -404,7 +346,7 @@
     <property name="geometry">
      <rect>
       <x>950</x>
-      <y>270</y>
+      <y>234</y>
       <width>150</width>
       <height>27</height>
      </rect>
@@ -417,7 +359,7 @@
     <property name="geometry">
      <rect>
       <x>950</x>
-      <y>300</y>
+      <y>264</y>
       <width>151</width>
       <height>27</height>
      </rect>
@@ -442,7 +384,7 @@
     <property name="geometry">
      <rect>
       <x>950</x>
-      <y>330</y>
+      <y>294</y>
       <width>80</width>
       <height>27</height>
      </rect>
@@ -455,7 +397,7 @@
     <property name="geometry">
      <rect>
       <x>950</x>
-      <y>360</y>
+      <y>324</y>
       <width>80</width>
       <height>27</height>
      </rect>
@@ -468,7 +410,7 @@
     <property name="geometry">
      <rect>
       <x>1120</x>
-      <y>240</y>
+      <y>204</y>
       <width>41</width>
       <height>27</height>
      </rect>
@@ -481,7 +423,7 @@
     <property name="geometry">
      <rect>
       <x>1106</x>
-      <y>246</y>
+      <y>210</y>
       <width>16</width>
       <height>17</height>
      </rect>
@@ -494,7 +436,7 @@
     <property name="geometry">
      <rect>
       <x>1120</x>
-      <y>270</y>
+      <y>234</y>
       <width>41</width>
       <height>27</height>
      </rect>
@@ -507,7 +449,7 @@
     <property name="geometry">
      <rect>
       <x>1106</x>
-      <y>276</y>
+      <y>240</y>
       <width>16</width>
       <height>17</height>
      </rect>
@@ -525,21 +467,16 @@
       <height>27</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string>Fwd Janko</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Fwd Samko</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Fwd Danko</string>
-     </property>
-    </item>
+   </widget>
+   <widget class="QLineEdit" name="guiLePriority">
+    <property name="geometry">
+     <rect>
+      <x>950</x>
+      <y>354</y>
+      <width>80</width>
+      <height>27</height>
+     </rect>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
