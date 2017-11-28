@@ -1,0 +1,5 @@
+`gnome-terminal -e "sudo mn --topo=linear,3 --mac --controller=remote"`
+
+#`gnome-terminal -e "sudo ryu-manager --verbose /usr/local/lib/python2.7/dist-packages/ryu/app simple_switch_13.py /usr/local/lib/python2.7/dist-packages/ryu/app ofctl_rest.py" $SHELL`
+
+`gnome-terminal -e "sudo /usr/marko/PycharmProjects/DOVI/code python GuiCode.py"`

@@ -124,7 +124,7 @@ def loadFromForwardersFlowTable(jasonData, pom):
                             srcIP = IP
                         else:
                             srcIP = tupleiter["nw_src"]
-                            srcPrefix = 0
+                            srcPrefix = 32
                     if "nw_dst" in tupleiter:
                         if "/" in tupleiter["nw_dst"]:
                             IP, prefix = tupleiter["nw_dst"].split('/')
@@ -132,7 +132,7 @@ def loadFromForwardersFlowTable(jasonData, pom):
                             dstIP = IP
                         else:
                             dstIP = tupleiter["nw_dst"]
-                            dstPrefix = 0
+                            dstPrefix = 32
                     if "dl_src" in tupleiter:
                         srcMac = tupleiter["dl_src"]
                     if "dl_dst" in tupleiter:
@@ -317,10 +317,16 @@ def loadUserData():     #Loading from TextFields
     ACL_match_data = {}
 
     if ui.guiLeSrcIp.text():
-        ACL_match_data['nw_src'] = str(ui.guiLeSrcIp.text()) + '/' + str(ui.guiLeSrcPrefix.text())
+        if str(ui.guiLeSrcPrefix.text()) == '':
+            ACL_match_data['nw_src'] = str(ui.guiLeSrcIp.text())
+        else:
+            ACL_match_data['nw_src'] = str(ui.guiLeSrcIp.text()) + '/' + str(ui.guiLeSrcPrefix.text())
 
     if ui.guiLeDstIp.text():
-        ACL_match_data['nw_dst'] = str(ui.guiLeDstIp.text()) + "/" + str(ui.guiLeDstPrefix.text())
+        if str(ui.guiLeDstPrefix.text()) == '':
+            ACL_match_data['nw_dst'] = str(ui.guiLeDstIp.text())
+        else:
+            ACL_match_data['nw_dst'] = str(ui.guiLeDstIp.text()) + "/" + str(ui.guiLeDstPrefix.text())
 
     if ui.guiLeSrcMac.text():
         ACL_match_data['dl_src'] = str(ui.guiLeSrcMac.text())
